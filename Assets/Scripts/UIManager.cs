@@ -35,7 +35,6 @@ public class UIManager : MonoBehaviour
     private void Start()
     {
         scoreText.text = "Score: 0";
-        bestScoreText.text = "Best: 0";
     }
 
     public void UpdateScore(int score)

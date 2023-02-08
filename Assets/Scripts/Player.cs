@@ -12,11 +12,14 @@ public class Player : MonoBehaviour
     float xLimit = 3.1f;
     float highestY = 0;
     int score = 0;
+    int bestScore = 0;
 
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        bestScore = PlayerPrefs.GetInt("Score", 0);
+        UIManager.Instance.UpdateBestScore(bestScore);
     }
 
     // Update is called once per frame
@@ -65,6 +68,12 @@ public class Player : MonoBehaviour
         if (transform.position.y < (highestY - 7f))
         {
             UIManager.Instance.EnableDeathScreen(score);
+            if (score > bestScore)
+            {
+                bestScore = score;
+                PlayerPrefs.SetInt("Score", bestScore);
+                UIManager.Instance.UpdateBestScore(bestScore);
+            }
             if (Input.GetMouseButtonDown(0))
             {
                 GameManager.Instance.RestartGame();
