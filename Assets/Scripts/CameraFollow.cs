@@ -7,8 +7,8 @@ public class CameraFollow : MonoBehaviour
 
     [SerializeField]
     Transform player;
+    private Vector3 velocity = Vector3.zero;
 
-    // Update is called once per frame
     void LateUpdate()
     {
         if (player.position.y > 6f)
@@ -16,7 +16,7 @@ public class CameraFollow : MonoBehaviour
             if (player.position.y > transform.position.y)
             {
                 Vector3 newPos = new Vector3(transform.position.x, player.position.y, transform.position.z);
-                transform.position = newPos;
+                transform.position = Vector3.SmoothDamp(transform.position, newPos, ref velocity, 0.3f);
             }
         }
     }
