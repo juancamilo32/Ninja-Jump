@@ -7,6 +7,15 @@ public class Platform : MonoBehaviour
 
     [SerializeField]
     float jumpForce = 10f;
+    [SerializeField]
+    int id;
+
+    GameObject player;
+
+    private void Start()
+    {
+        player = FindObjectOfType<Player>().gameObject;
+    }
 
     private void OnCollisionEnter2D(Collision2D other)
     {
@@ -15,12 +24,43 @@ public class Platform : MonoBehaviour
             Rigidbody2D rb = other.collider.GetComponent<Rigidbody2D>();
             if (rb)
             {
-                Vector2 velocity = rb.velocity;
-                velocity.y = jumpForce;
-                rb.velocity = velocity;
+                if (id == 0 || id == 1)
+                {
+                    Vector2 velocity = rb.velocity;
+                    velocity.y = jumpForce;
+                    rb.velocity = velocity;
+                }
+                else if (id == 2)
+                {
+                    Rigidbody2D rb2 = GetComponent<Rigidbody2D>();
+                    if (rb2)
+                    {
+                        rb2.gravityScale = 1;
+                    }
+                }
+                else if (id == 3)
+                {
+                    Player player = other.collider.GetComponent<Player>();
+                    if (player)
+                    {
+                        Debug.Log("Tocó la plataforma");
+                        player.dead = true;
+                    }
+                }
+            }
+
+        }
+    }
+
+    private void Update()
+    {
+        if (id != 0)
+        {
+            if (player.transform.position.y > transform.position.y + 8)
+            {
+                Destroy(this.gameObject);
             }
         }
-
     }
 
 }

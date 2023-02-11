@@ -8,6 +8,12 @@ public class LevelGenerator : MonoBehaviour
     [SerializeField]
     GameObject platformPrefab;
     [SerializeField]
+    GameObject bouncyPlatformPrefab;
+    [SerializeField]
+    GameObject fallOffPlatformPrefab;
+    [SerializeField]
+    GameObject deathPlatformPrefab;
+    [SerializeField]
     Transform cameraPos;
     GameObject[] platforms;
 
@@ -40,6 +46,30 @@ public class LevelGenerator : MonoBehaviour
             {
                 Vector3 newPos = new Vector3(Random.Range(-levelWidth, levelWidth), highestPlatformHeight + Random.Range(minY, maxY), platforms[i].transform.position.z);
                 platforms[i].transform.position = newPos;
+                if (Random.Range(1, 20) == 5)
+                {
+                    Vector3 bouncyPlatformPos = new Vector3(Random.Range(-levelWidth, levelWidth), newPos.y - Random.Range(0, maxY), newPos.z);
+                    Instantiate(bouncyPlatformPrefab, bouncyPlatformPos, Quaternion.identity);
+                }
+                Debug.Log(newPos.y);
+                if (newPos.y > 200)
+                {
+                    if (Random.Range(1, 30) == 5)
+                    {
+                        Debug.Log("Falloff platform spawned");
+                        Vector3 fallOffPlatformPos = new Vector3(Random.Range(-levelWidth, levelWidth), newPos.y - Random.Range(0, maxY), newPos.z);
+                        Instantiate(fallOffPlatformPrefab, fallOffPlatformPos, Quaternion.identity);
+                    }
+                }
+                if (newPos.y > 300)
+                {
+                    if (Random.Range(1, 30) == 5)
+                    {
+                        Debug.Log("Death platform spawned");
+                        Vector3 deathPlatformPos = new Vector3(Random.Range(-levelWidth, levelWidth), newPos.y - Random.Range(0, maxY), newPos.z);
+                        Instantiate(deathPlatformPrefab, deathPlatformPos, Quaternion.identity);
+                    }
+                }
                 highestPlatformHeight = newPos.y;
             }
         }

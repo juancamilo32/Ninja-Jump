@@ -49,7 +49,11 @@ public class UIManager : MonoBehaviour
 
     public void EnableDeathScreen(int score)
     {
-        deathScreen.gameObject.SetActive(true);
+        CanvasGroup canvasGroup = deathScreen.GetComponent<CanvasGroup>();
+        if (canvasGroup)
+        {
+            canvasGroup.alpha += Time.deltaTime * 2;
+        }
         deathScreen.transform.GetChild(2).GetComponent<TextMeshProUGUI>().text = "Score: " + score.ToString(); ;
     }
 

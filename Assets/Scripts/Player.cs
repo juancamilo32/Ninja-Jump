@@ -14,6 +14,8 @@ public class Player : MonoBehaviour
     int score = 0;
     int bestScore = 0;
 
+    public bool dead = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -27,7 +29,14 @@ public class Player : MonoBehaviour
     {
         Movement();
         UpdateScore();
-        ManageDeath();
+        if (transform.position.y < (highestY - 7f))
+        {
+            dead = true;
+        }
+        if (dead)
+        {
+            StartCoroutine(DeathRoutine());
+        }
     }
 
     void FixedUpdate()
@@ -63,21 +72,22 @@ public class Player : MonoBehaviour
         }
     }
 
-    void ManageDeath()
+    public IEnumerator DeathRoutine()
     {
-        if (transform.position.y < (highestY - 7f))
+        // Play death animation
+        Debug.Log("Llegó a la corutina");
+        yield return new WaitForSeconds(1f);
+        UIManager.Instance.EnableDeathScreen(score);
+        if (score > bestScore)
         {
-            UIManager.Instance.EnableDeathScreen(score);
-            if (score > bestScore)
-            {
-                bestScore = score;
-                PlayerPrefs.SetInt("Score", bestScore);
-                UIManager.Instance.UpdateBestScore(bestScore);
-            }
-            if (Input.GetMouseButtonDown(0))
-            {
-                GameManager.Instance.RestartGame();
-            }
+            bestScore = score;
+            PlayerPrefs.SetInt("Score", bestScore);
+            UIManager.Instance.UpdateBestScore(bestScore);
+        }
+        if (Input.GetMouseButtonDown(0))
+        {
+            GameManager.Instance.RestartGame();
         }
     }
+
 }
