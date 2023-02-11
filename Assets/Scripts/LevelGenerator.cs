@@ -51,12 +51,10 @@ public class LevelGenerator : MonoBehaviour
                     Vector3 bouncyPlatformPos = new Vector3(Random.Range(-levelWidth, levelWidth), newPos.y - Random.Range(0, maxY), newPos.z);
                     Instantiate(bouncyPlatformPrefab, bouncyPlatformPos, Quaternion.identity);
                 }
-                Debug.Log(newPos.y);
                 if (newPos.y > 200)
                 {
                     if (Random.Range(1, 30) == 5)
                     {
-                        Debug.Log("Falloff platform spawned");
                         Vector3 fallOffPlatformPos = new Vector3(Random.Range(-levelWidth, levelWidth), newPos.y - Random.Range(0, maxY), newPos.z);
                         Instantiate(fallOffPlatformPrefab, fallOffPlatformPos, Quaternion.identity);
                     }
@@ -65,7 +63,6 @@ public class LevelGenerator : MonoBehaviour
                 {
                     if (Random.Range(1, 30) == 5)
                     {
-                        Debug.Log("Death platform spawned");
                         Vector3 deathPlatformPos = new Vector3(Random.Range(-levelWidth, levelWidth), newPos.y - Random.Range(0, maxY), newPos.z);
                         Instantiate(deathPlatformPrefab, deathPlatformPos, Quaternion.identity);
                     }

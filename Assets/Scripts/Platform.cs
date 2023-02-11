@@ -43,7 +43,6 @@ public class Platform : MonoBehaviour
                     Player player = other.collider.GetComponent<Player>();
                     if (player)
                     {
-                        Debug.Log("Tocó la plataforma");
                         player.dead = true;
                     }
                 }

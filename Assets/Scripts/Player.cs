@@ -75,7 +75,6 @@ public class Player : MonoBehaviour
     public IEnumerator DeathRoutine()
     {
         // Play death animation
-        Debug.Log("Llegó a la corutina");
         yield return new WaitForSeconds(1f);
         UIManager.Instance.EnableDeathScreen(score);
         if (score > bestScore)
