@@ -540,6 +540,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   movementSpeed: 2000
+  dead: 0
 --- !u!1 &335047562
 GameObject:
   m_ObjectHideFlags: 0
@@ -1504,13 +1505,14 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2059835198}
+  - component: {fileID: 2059835199}
   m_Layer: 5
   m_Name: Lose Screen
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &2059835198
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1535,6 +1537,18 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!225 &2059835199
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2059835197}
+  m_Enabled: 1
+  m_Alpha: 0
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &2094674648
 GameObject:
   m_ObjectHideFlags: 0
@@ -1581,8 +1595,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   platformPrefab: {fileID: 1059844263434971924, guid: c2e78f30a14b3e245ba483f2e259410b, type: 3}
   bouncyPlatformPrefab: {fileID: 5030830473470796723, guid: 16f024d864e404b4f9824222b4900b6e, type: 3}
-  fallOffPlatform: {fileID: 4384211372370965636, guid: d6f55d5c7d40b5046901b4ca359a2c13, type: 3}
-  deathPlatform: {fileID: 3611047422105081918, guid: 0fdc235296ceae741a3f1c42e3a056bc, type: 3}
+  fallOffPlatformPrefab: {fileID: 4384211372370965636, guid: d6f55d5c7d40b5046901b4ca359a2c13, type: 3}
+  deathPlatformPrefab: {fileID: 3611047422105081918, guid: 0fdc235296ceae741a3f1c42e3a056bc, type: 3}
   cameraPos: {fileID: 519420032}
   numberOfPlatforms: 10
   levelWidth: 2.5
