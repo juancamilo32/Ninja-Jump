@@ -22,10 +22,15 @@ public class Platform : MonoBehaviour
         if (other.relativeVelocity.y <= 0)
         {
             Rigidbody2D rb = other.collider.GetComponent<Rigidbody2D>();
+            Animator animator = other.collider.GetComponent<Animator>();
             if (rb)
             {
                 if (id == 0 || id == 1)
                 {
+                    if (animator)
+                    {
+                        animator.SetTrigger("HitGround");
+                    }
                     Vector2 velocity = rb.velocity;
                     velocity.y = jumpForce;
                     rb.velocity = velocity;
@@ -43,6 +48,7 @@ public class Platform : MonoBehaviour
                     Player player = other.collider.GetComponent<Player>();
                     if (player)
                     {
+                        animator.SetTrigger("Death");
                         player.dead = true;
                     }
                 }

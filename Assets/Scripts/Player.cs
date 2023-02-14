@@ -8,6 +8,8 @@ public class Player : MonoBehaviour
     [SerializeField]
     float movementSpeed = 0f;
     Rigidbody2D rb;
+    SpriteRenderer spriteRenderer;
+    Animator animator;
     float horizontalInput = 0f;
     float xLimit = 3.1f;
     float highestY = 0;
@@ -20,6 +22,8 @@ public class Player : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        animator = GetComponent<Animator>();
         bestScore = PlayerPrefs.GetInt("Score", 0);
         UIManager.Instance.UpdateBestScore(bestScore);
     }
@@ -29,6 +33,7 @@ public class Player : MonoBehaviour
     {
         Movement();
         UpdateScore();
+        animator.SetFloat("yVel", rb.velocity.y);
         if (transform.position.y < (highestY - 7f))
         {
             dead = true;
@@ -37,6 +42,7 @@ public class Player : MonoBehaviour
         {
             StartCoroutine(DeathRoutine());
         }
+
     }
 
     void FixedUpdate()
@@ -62,6 +68,14 @@ public class Player : MonoBehaviour
     void Movement()
     {
         horizontalInput = Input.GetAxis("Horizontal") * movementSpeed * Time.deltaTime;
+        if (horizontalInput > 0)
+        {
+            spriteRenderer.flipX = false;
+        }
+        else if (horizontalInput < 0)
+        {
+            spriteRenderer.flipX = true;
+        }
         if (transform.position.x >= xLimit)
         {
             transform.position = new Vector3(-xLimit, transform.position.y, transform.position.z);
@@ -74,7 +88,6 @@ public class Player : MonoBehaviour
 
     public IEnumerator DeathRoutine()
     {
-        // Play death animation
         yield return new WaitForSeconds(1f);
         UIManager.Instance.EnableDeathScreen(score);
         if (score > bestScore)
