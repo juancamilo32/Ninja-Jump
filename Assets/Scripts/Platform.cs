@@ -48,6 +48,7 @@ public class Platform : MonoBehaviour
                     Player player = other.collider.GetComponent<Player>();
                     if (player)
                     {
+                        animator.SetTrigger("Death");
                         player.dead = true;
                     }
                 }

@@ -88,7 +88,6 @@ public class Player : MonoBehaviour
 
     public IEnumerator DeathRoutine()
     {
-        // Play death animation
         yield return new WaitForSeconds(1f);
         UIManager.Instance.EnableDeathScreen(score);
         if (score > bestScore)
