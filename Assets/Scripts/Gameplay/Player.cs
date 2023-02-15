@@ -17,6 +17,7 @@ public class Player : MonoBehaviour
     int bestScore = 0;
 
     public bool dead = false;
+    public bool deathAudioPlayed = false;
 
     // Start is called before the first frame update
     void Start()
@@ -31,7 +32,6 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Movement();
         UpdateScore();
         animator.SetFloat("yVel", rb.velocity.y);
         if (transform.position.y < (highestY - 7f))
@@ -40,9 +40,12 @@ public class Player : MonoBehaviour
         }
         if (dead)
         {
-            StartCoroutine(DeathRoutine());
+            Death();
         }
-
+        else
+        {
+            Movement();
+        }
     }
 
     void FixedUpdate()
@@ -86,9 +89,14 @@ public class Player : MonoBehaviour
         }
     }
 
-    public IEnumerator DeathRoutine()
+    public void Death()
     {
-        yield return new WaitForSeconds(1f);
+        if (!deathAudioPlayed)
+        {
+            AudioManager.instance.Play("Death");
+            deathAudioPlayed = true;
+        }
+        GetComponent<BoxCollider2D>().enabled = false;
         UIManager.Instance.EnableDeathScreen(score);
         if (score > bestScore)
         {
