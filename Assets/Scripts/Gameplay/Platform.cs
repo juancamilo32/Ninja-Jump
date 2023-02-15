@@ -31,6 +31,14 @@ public class Platform : MonoBehaviour
                     {
                         animator.SetTrigger("HitGround");
                     }
+                    if (id == 0)
+                    {
+                        AudioManager.instance.Play("Jump");
+                    }
+                    else
+                    {
+                        AudioManager.instance.Play("Bouncy");
+                    }
                     Vector2 velocity = rb.velocity;
                     velocity.y = jumpForce;
                     rb.velocity = velocity;
@@ -42,19 +50,31 @@ public class Platform : MonoBehaviour
                     {
                         rb2.gravityScale = 1;
                     }
+                    AudioManager.instance.Play("Falloff");
                 }
                 else if (id == 3)
                 {
                     Player player = other.collider.GetComponent<Player>();
                     if (player)
                     {
-                        animator.SetTrigger("Death");
-                        player.dead = true;
+                        StartCoroutine(DeathRoutine(animator, player));
                     }
                 }
             }
 
         }
+    }
+
+    IEnumerator DeathRoutine(Animator animator, Player player)
+    {
+        animator.SetTrigger("Death");
+        if (!player.deathAudioPlayed)
+        {
+            AudioManager.instance.Play("Death");
+            player.deathAudioPlayed = true;
+        }
+        yield return new WaitForSeconds(1f);
+        player.dead = true;
     }
 
     private void Update()
