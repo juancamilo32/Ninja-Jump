@@ -68,6 +68,7 @@ public class Platform : MonoBehaviour
     IEnumerator DeathRoutine(Animator animator, Player player)
     {
         animator.SetTrigger("Death");
+        player.canMove = false;
         if (!player.deathAudioPlayed)
         {
             AudioManager.instance.Play("Death");
