@@ -543,6 +543,7 @@ MonoBehaviour:
   movementSpeed: 2000
   dead: 0
   deathAudioPlayed: 0
+  canMove: 1
 --- !u!95 &167010228
 Animator:
   serializedVersion: 4
@@ -640,7 +641,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 335047562}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 10}
+  m_LocalPosition: {x: 0, y: 0.36, z: 10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1694,11 +1695,13 @@ MonoBehaviour:
   bouncyPlatformPrefab: {fileID: 5030830473470796723, guid: 16f024d864e404b4f9824222b4900b6e, type: 3}
   fallOffPlatformPrefab: {fileID: 4384211372370965636, guid: d6f55d5c7d40b5046901b4ca359a2c13, type: 3}
   deathPlatformPrefab: {fileID: 3611047422105081918, guid: 0fdc235296ceae741a3f1c42e3a056bc, type: 3}
-  cameraPos: {fileID: 519420032}
+  cam: {fileID: 0}
   numberOfPlatforms: 10
   levelWidth: 2.5
   minY: 0.8
   maxY: 2
+  warningSign: {fileID: 1069578621993324535, guid: cd0e913b600cde747973810bbda4093f, type: 3}
+  shuriken: {fileID: 3137814574577950297, guid: 2723dce2470499349a097e627289b2d2, type: 3}
 --- !u!1 &2106631580
 GameObject:
   m_ObjectHideFlags: 0
@@ -1882,6 +1885,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 5030830473470795853, guid: 16f024d864e404b4f9824222b4900b6e, type: 3}
+      propertyPath: jumpForce
+      value: 30
+      objectReference: {fileID: 0}
     - target: {fileID: 5030830473470795854, guid: 16f024d864e404b4f9824222b4900b6e, type: 3}
       propertyPath: m_RootOrder
       value: 5

@@ -98,7 +98,6 @@ public class Player : MonoBehaviour
             AudioManager.instance.Play("Death");
             deathAudioPlayed = true;
         }
-        GetComponent<BoxCollider2D>().enabled = false;
         UIManager.Instance.EnableDeathScreen(score);
         if (score > bestScore)
         {
@@ -110,6 +109,20 @@ public class Player : MonoBehaviour
         {
             GameManager.Instance.RestartGame();
         }
+    }
+
+    public IEnumerator DeathRoutine()
+    {
+        canMove = false;
+        animator.SetTrigger("Death");
+        if (!deathAudioPlayed)
+        {
+            AudioManager.instance.Play("Death");
+            deathAudioPlayed = true;
+        }
+        GetComponent<BoxCollider2D>().enabled = false;
+        yield return new WaitForSeconds(1f);
+        dead = true;
     }
 
 }

@@ -14,7 +14,7 @@ public class LevelGenerator : MonoBehaviour
     [SerializeField]
     GameObject deathPlatformPrefab;
     [SerializeField]
-    Transform cameraPos;
+    Camera cam;
     GameObject[] platforms;
 
     public int numberOfPlatforms = 10;
@@ -23,9 +23,16 @@ public class LevelGenerator : MonoBehaviour
     public float maxY = 1.5f;
     float highestPlatformHeight;
 
+    [SerializeField]
+    GameObject warningSign;
+    [SerializeField]
+    GameObject shuriken;
+
+
     // Start is called before the first frame update
     void Start()
     {
+        cam = FindObjectOfType<Camera>();
         platforms = new GameObject[numberOfPlatforms];
         Vector3 spawnPosition = new Vector3(0f, 21f, 0f);
         for (int i = 0; i < numberOfPlatforms; i++)
@@ -42,7 +49,7 @@ public class LevelGenerator : MonoBehaviour
     {
         for (int i = 0; i < numberOfPlatforms; i++)
         {
-            if (platforms[i].transform.position.y < (cameraPos.transform.position.y - 5.5))
+            if (platforms[i].transform.position.y < (cam.transform.position.y - 5.5))
             {
                 Vector3 newPos = new Vector3(Random.Range(-levelWidth, levelWidth), highestPlatformHeight + Random.Range(minY, maxY), platforms[i].transform.position.z);
                 platforms[i].transform.position = newPos;
@@ -70,5 +77,37 @@ public class LevelGenerator : MonoBehaviour
                 highestPlatformHeight = newPos.y;
             }
         }
+        SpawnShuriken();
     }
+
+    void SpawnShuriken()
+    {
+        if (highestPlatformHeight > 100)
+        {
+            if (Random.Range(1, 2500) == 5)
+            {
+                StartCoroutine(ShurikenRoutine());
+            }
+        }
+    }
+
+    IEnumerator ShurikenRoutine()
+    {
+        float randomX = Random.Range(-2.2f, 2.2f);
+        Vector3 position = new Vector3(randomX, cam.transform.position.y + 4.4f, 0f);
+        GameObject warning = Instantiate(warningSign, position, Quaternion.identity);
+        warning.transform.parent = cam.transform;
+        yield return new WaitForSeconds(0.5f);
+        warning.SetActive(false);
+        yield return new WaitForSeconds(0.5f);
+        warning.SetActive(true);
+        yield return new WaitForSeconds(0.5f);
+        warning.SetActive(false);
+        yield return new WaitForSeconds(0.5f);
+        warning.SetActive(true);
+        yield return new WaitForSeconds(0.5f);
+        Destroy(warning);
+        Instantiate(shuriken, new Vector3(randomX, cam.transform.position.y + 6f, 0f), Quaternion.identity);
+    }
+
 }
