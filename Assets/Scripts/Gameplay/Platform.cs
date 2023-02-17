@@ -57,25 +57,12 @@ public class Platform : MonoBehaviour
                     Player player = other.collider.GetComponent<Player>();
                     if (player)
                     {
-                        StartCoroutine(DeathRoutine(animator, player));
+                        StartCoroutine(player.DeathRoutine());
                     }
                 }
             }
 
         }
-    }
-
-    IEnumerator DeathRoutine(Animator animator, Player player)
-    {
-        animator.SetTrigger("Death");
-        player.canMove = false;
-        if (!player.deathAudioPlayed)
-        {
-            AudioManager.instance.Play("Death");
-            player.deathAudioPlayed = true;
-        }
-        yield return new WaitForSeconds(1f);
-        player.dead = true;
     }
 
     private void Update()
